@@ -1,3 +1,5 @@
+const appInsights = require("applicationinsights");
+appInsights.setup().setAutoCollectConsole(true).start();
 const express = require("express");
 const cors = require("cors");
 const app = express();
