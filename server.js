@@ -13,4 +13,7 @@ app.get("/api/hello", (req, res) =>
 );
 
 const port = process.env.PORT || 8080;
+app.get("/api/error", (req, res) => {
+  throw new Error("Fallo simulado para practicar");
+});
 app.listen(port, () => console.log("API en puerto " + port));
