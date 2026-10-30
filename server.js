@@ -18,7 +18,12 @@ app.get("/api/error", (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  appInsights.defaultClient.trackException({ exception: err });
+  console.error("Error en " + req.path + ": " + err.message);
+  const client = appInsights.defaultClient;
+  if (client) {
+    client.trackException({ exception: err, properties: { route: req.path } });
+    client.flush();
+  }
   res.status(500).json({ error: "Error interno" });
 });
 app.listen(port, () => console.log("API en puerto " + port));
