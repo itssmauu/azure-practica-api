@@ -16,4 +16,9 @@ const port = process.env.PORT || 8080;
 app.get("/api/error", (req, res) => {
   throw new Error("Fallo simulado para practicar");
 });
+
+app.use((err, req, res, next) => {
+  appInsights.defaultClient.trackException({ exception: err });
+  res.status(500).json({ error: "Error interno" });
+});
 app.listen(port, () => console.log("API en puerto " + port));
